@@ -8,7 +8,21 @@ function RectMT:size()
 end
 
 function RectMT:neighborDirection(otherRect)
-
+	local function checkCoordForEquality(coord)
+		return self.lu[coord] == otherRect.lu[coord] and
+			self.rd[coord] == otherRect.rd[coord]
+	end
+	local dx, dy
+	if checkCoordForEquality("x") then
+		dx = 0
+		dy = self.lu < otherRect.lu and 1 or -1
+	elseif checkCoordForEquality("y") then
+		dy = 0
+		dx = self.lu < otherRect.lu and 1 or -1
+	else
+		return nil
+	end
+	return Vector2d.new(dx, dy)
 end
 
 function RectMT:__add(otherRect)
@@ -20,10 +34,7 @@ function RectMT:split()
 end
 
 
-
-
 local Rect = {}
-
 
 function Rect:new(p1, p2)
 	if p1 > p2 then 
