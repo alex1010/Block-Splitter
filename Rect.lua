@@ -26,11 +26,36 @@ function RectMT:neighborDirection(otherRect)
 end
 
 function RectMT:__add(otherRect)
-
+	local direction = self:neighborDirection(otherRect)
+	if direction then
+		local minLU = self.lu < otherRect.lu and self.lu or otherRect.lu
+		local maxRD = self.rd > otherRect.rd and self.rd or otherRect.rd
+		return Rect:new(minLU, maxRD)
+	else
+		return nil
+	end
 end
 
 function RectMT:split()
-
+	local w, h = self:size()()
+	local powerOf2 = 0
+	local function canDivide(x)
+		return x % 2 == 0 and x / 2 ~= 1
+	end
+	while canDivide(w) and canDivide(h) do
+		w, h = w / 2, h / 2
+		powerOf2 = powerOf2 + 1
+	end
+	if powerOf2 == 0 then return nil end
+	local result = {}
+	for i = self.lu.x, self.rd.x, powerOf2 do
+		for j = self.lu.y, self.rd.y, powerOf2 do
+			local nextLU = Point.new(i, j)
+			local nextRD = Point.new(i + powerOf2 - 1, j + powerOf2 - 1)
+			result[#result + 1] = Rect:new(nextLU, nextRD)
+		end
+	end
+	return result
 end
 
 
