@@ -1,7 +1,8 @@
 local blocks = {}
 
 function blocks:setup(setupTable)
-
+	self.blocks = {}
+	
 end
 
 function blocks:split(point)
