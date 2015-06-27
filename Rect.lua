@@ -62,9 +62,10 @@ end
 local Rect = {}
 
 function Rect:new(p1, p2)
-	if p1 > p2 then 
-		p1, p2 = p2, p1
-	end
+	local min, max = math.min, math.max
+	local minX, minY = min(p1.x, p2.x), min(p1.y, p2.y)
+	local maxX, maxY = max(p1.x, p2.x), max(p1.y, p2.y)
+	p1, p2 = Point.new(minX, minY), Point.new(maxX, maxY)
 	local rect = {
 		lu = p1,
 		rd = p2
