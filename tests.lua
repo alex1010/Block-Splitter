@@ -1,6 +1,7 @@
 local luaunit = require "luaunit"
 local Rect = require "Rect"
 local Point = require "Vector2d"
+local blocks = require "blocks"
 
 local lu = Point.new(5, 2)
 local rd = Point.new(3, 8)
@@ -38,6 +39,17 @@ function testNeighborDirection()
 	local direction = r1:neighborDirection(r3)
 	luaunit.assertEquals(direction.x, 1)
 	luaunit.assertEquals(direction.y, 0)
+end
+
+function testSetup()
+	blocks:setup {
+		{1, 1, 2, 2, 1},
+		{3, 1, 5, 3, 2},
+		{1, 3, 2, 3, 3}
+	}
+	luaunit.assertEquals(blocks.blocks[1].rect.lu.y, 1)
+	luaunit.assertEquals(blocks.blocks[2].color, 2)
+	luaunit.assertEquals(blocks.blocks[3].rect.rd.x, 2)
 end
 
 luaunit.LuaUnit.run()
