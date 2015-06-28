@@ -14,16 +14,34 @@ function blocks:setup(setupTable)
 	end
 end
 
+function blocks:enumerate(f)
+	for id, coloredRect in pairs(self.blocks) do
+		local skip = f(id, coloredRect)
+		if skip then return end
+	end	
+end
+
 function blocks:idForPoint(point)
-	for i = 1, #self.blocks do
-		local coloredRect = self.blocks[i]
+	local result
+	self:enumerate(function (id, coloredRect)
 		if coloredRect.rect:containsPoint(point) then
-			return i
+			result = id
+			return true
 		end
+	end)
+	return result
+end
+
+function blocks:getFreeId()
+	local id = 1
+	while self.blocks[id] do
+		id = id + 1
 	end
+	return id
 end
 
 function blocks:split(point)
+
 end
 
 function blocks:merge(point, direction)

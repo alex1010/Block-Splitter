@@ -70,6 +70,9 @@ function testIdForPoint()
 	luaunit.assertEquals(blocks:idForPoint(Point.new(3, 1)), 2)
 end
 
+function testFreeId()
+	luaunit.assertEquals(blocks:getFreeId(), 4)
+end
 
 
 luaunit.LuaUnit.run()
