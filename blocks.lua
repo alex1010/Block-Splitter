@@ -41,7 +41,18 @@ function blocks:getFreeId()
 end
 
 function blocks:split(point)
-
+	local id = self:idForPoint(point)
+	local coloredRect = self.blocks[id]
+	local rect = coloredRect.rect
+	local color = coloredRect.color
+	local subrects = rect:split()
+	self.blocks[id] = nil
+	for i = 1, #subrects do
+		local nextId = self:getFreeId()
+		local subrect = subrects[i]
+		local coloredSubRect = ColoredRect:new(subrect, color)
+		self.blocks[nextId] = coloredSubRect
+	end
 end
 
 function blocks:merge(point, direction)
