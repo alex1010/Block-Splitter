@@ -51,15 +51,23 @@ function testContainsPoint()
 	luaunit.assertTrue(rect:containsPoint(p4))
 end
 
+blocks:setup {
+	{1, 1, 2, 2, 1},
+	{3, 1, 5, 3, 2},
+	{1, 3, 2, 3, 3}
+}
+
 function testSetup()
-	blocks:setup {
-		{1, 1, 2, 2, 1},
-		{3, 1, 5, 3, 2},
-		{1, 3, 2, 3, 3}
-	}
+
 	luaunit.assertEquals(blocks.blocks[1].rect.lu.y, 1)
 	luaunit.assertEquals(blocks.blocks[2].color, 2)
 	luaunit.assertEquals(blocks.blocks[3].rect.rd.x, 2)
+end
+
+function testIdForPoint()
+	luaunit.assertEquals(blocks:idForPoint(Point.new(2, 1)), 1)
+	luaunit.assertNil(blocks:idForPoint(Point.new(100, 100)))
+	luaunit.assertEquals(blocks:idForPoint(Point.new(3, 1)), 2)
 end
 
 
