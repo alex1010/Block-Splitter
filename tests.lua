@@ -8,7 +8,6 @@ local rd = Point.new(3, 8)
 local rect = Rect:new(lu, rd)
 
 function testRectCreation()
-	
 	luaunit.assertEquals(rect.lu.x, 3)
 	luaunit.assertEquals(rect.lu.y, 2)
 	luaunit.assertEquals(rect.rd.x, 5)
@@ -41,6 +40,17 @@ function testNeighborDirection()
 	luaunit.assertEquals(direction.y, 0)
 end
 
+function testContainsPoint()
+	local p1 = Point.new(3, 3)
+	local p2 = Point.new(10, 20)
+	local p3 = Point.new(3, 20)
+	local p4 = Point.new(5, 2)
+	luaunit.assertTrue(rect:containsPoint(p1))
+	luaunit.assertFalse(rect:containsPoint(p2))
+	luaunit.assertFalse(rect:containsPoint(p3))
+	luaunit.assertTrue(rect:containsPoint(p4))
+end
+
 function testSetup()
 	blocks:setup {
 		{1, 1, 2, 2, 1},
@@ -51,6 +61,8 @@ function testSetup()
 	luaunit.assertEquals(blocks.blocks[2].color, 2)
 	luaunit.assertEquals(blocks.blocks[3].rect.rd.x, 2)
 end
+
+
 
 luaunit.LuaUnit.run()
 -- os.exit( luaunit.LuaUnit.run() )

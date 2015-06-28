@@ -14,8 +14,13 @@ function blocks:setup(setupTable)
 	end
 end
 
+function blocks:idForPoint(point)
+	for i = 1, #self.blocks do
+
+	end
+end
+
 function blocks:split(point)
-	
 end
 
 function blocks:merge(point, direction)

@@ -60,7 +60,9 @@ function RectMT:split()
 	return result
 end
 
-
+function RectMT:containsPoint(p)
+	return p >= self.lu and p <= self.rd
+end
 
 
 function Rect:new(p1, p2)
