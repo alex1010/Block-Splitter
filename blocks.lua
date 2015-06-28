@@ -16,7 +16,10 @@ end
 
 function blocks:idForPoint(point)
 	for i = 1, #self.blocks do
-
+		local coloredRect = self.blocks[i]
+		if coloredRect.rect:containsPoint(point) then
+			return i
+		end
 	end
 end
 
